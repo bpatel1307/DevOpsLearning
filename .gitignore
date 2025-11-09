@@ -55,4 +55,5 @@ LogFiles/
 
 # ======== Docker & Compose ========
 docker-compose.override.yml
+docker-compose.yml
 *.pid

@@ -1,9 +1,12 @@
+using Microsoft.AspNetCore.Builder;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddSwaggerGen();
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
@@ -13,6 +16,12 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+// This middleware serves the Swagger documentation UI
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "DevOps API V1");
+});
 
 app.UseHttpsRedirection();
 
