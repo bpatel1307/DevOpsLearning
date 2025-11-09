@@ -1,0 +1,58 @@
+# ======== .NET Core Build Artifacts ========
+bin/
+obj/
+out/
+dist/
+*.log
+
+# ======== User-Specific Files ========
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ======== HTTP test files (optional) ========
+*.http
+
+# ======== Visual Studio & VS Code ========
+.vs/
+.vscode/
+*.VC.db
+*.VC.VC.opendb
+
+# ======== Temporary & Cache Files ========
+*.tmp
+*.cache
+*.pdb
+*.dbmdl
+*.jfm
+*.tlog
+*.ilk
+
+# ======== Environment Config ========
+appsettings.Development.json
+appsettings.Local.json
+*.env
+
+# ======== OS generated files ========
+Thumbs.db
+.DS_Store
+ehthumbs.db
+desktop.ini
+
+# ======== Logs ========
+*.log
+logs/
+LogFiles/
+
+# ======== Publish outputs ========
+/publish/
+/wwwroot/lib/
+/node_modules/
+
+# ======== JetBrains Rider ========
+.idea/
+
+# ======== Docker & Compose ========
+docker-compose.override.yml
+*.pid
