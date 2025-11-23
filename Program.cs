@@ -1,6 +1,25 @@
-using Microsoft.AspNetCore.Builder;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Open Telemetry
+builder.Services.AddOpenTelemetry()
+    .WithTracing(tracing =>
+    {
+        tracing
+        .AddAspNetCoreInstrumentation()
+        .AddHttpClientInstrumentation();
+    })
+    .WithMetrics(metrics =>
+    {
+        metrics
+        .AddAspNetCoreInstrumentation()
+        .AddHttpClientInstrumentation()
+        .AddRuntimeInstrumentation()
+        .AddConsoleExporter()
+        .AddPrometheusExporter();
+    });
 
 // Add services to the container.
 
@@ -14,10 +33,12 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+   app.MapOpenApi();
 }
 
+app.MapPrometheusScrapingEndpoint();
 // This middleware serves the Swagger documentation UI
+app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "DevOps API V1");

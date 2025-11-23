@@ -17,7 +17,17 @@ FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 # create non-root user
 ARG APP_USER=app
 ARG APP_UID=1000
-RUN adduser --disabled-password --gecos "" --uid ${APP_UID} ${APP_USER}
+# create user only if not exists
+RUN if ! getent group "${APP_USER}" >/dev/null 2>&1; then \
+      groupadd -g "${APP_UID}" "${APP_USER}"; \
+    else \
+      echo "group ${APP_USER} exists"; \
+    fi && \
+    if ! id -u "${APP_USER}" >/dev/null 2>&1; then \
+      useradd -m -u "${APP_UID}" -g "${APP_USER}" -s /bin/bash "${APP_USER}"; \
+    else \
+      echo "user ${APP_USER} exists"; \
+    fi
 
 WORKDIR /app
 

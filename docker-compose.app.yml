@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  devopslearning-api:
+    image: localhost:5000/devopslearning:${TAG:-latest}
+    container_name: devopslearning-api
+    ports:
+      - "8081:8000"   # host:container (Kestrel in your Dockerfile listens on 8000)
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--spider", "http://127.0.0.1:8000/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
